@@ -1,0 +1,42 @@
+spring:
+  jpa:
+    show-sql: false
+  flyway:
+    enabled: true
+  data:
+    redis:
+      timeout: 500ms
+      connect-timeout: 500ms
+      repositories:
+        enabled: false
+
+app:
+  base-url: http://localhost:8080
+  cors:
+    allowed-origins: http://localhost:3000
+  id-generator:
+    worker-id: 0
+    max-backward-wait-ms: 100
+  cache:
+    enabled: true
+    redirect-ttl: 1h
+    negative-ttl: 30s
+    key-prefix: "url:redirect:"
+  analytics:
+    enabled: true
+    queue-capacity: 1000
+    batch-size: 100
+    flush-interval-ms: 100
+    ip-hash-salt: test-salt
+  rate-limit:
+    enabled: true
+    fail-open: true
+    key-prefix: "rate:create:"
+    create:
+      capacity: 10000
+      refill-per-second: 10000
+
+logging:
+  level:
+    root: WARN
+    com.vinyas.urlshortener: INFO

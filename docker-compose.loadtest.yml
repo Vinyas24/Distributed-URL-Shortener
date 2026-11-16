@@ -1,0 +1,13 @@
+# docker-compose.loadtest.yml
+# Overlay for load testing: disables per-IP rate limiting and raises Hikari pool size.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.loadtest.yml up -d
+services:
+  api-1:
+    environment:
+      RATE_LIMIT_ENABLED: "false"
+      DB_POOL_SIZE: "15"
+
+  api-2:
+    environment:
+      RATE_LIMIT_ENABLED: "false"
+      DB_POOL_SIZE: "15"

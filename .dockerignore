@@ -1,0 +1,16 @@
+# Exclude everything the Docker build doesn't need so the build context stays small.
+.git
+.gitignore
+.idea
+*.iml
+.vscode
+.settings
+.classpath
+.project
+*.log
+logs/
+target/
+loadtest/
+nginx/*.log
+README.md
+docs/
