@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #0B0B1A;
+    --bg-surface: #12122B;
+    --bg-raised: #1A1A38;
+    --bg-overlay: #22224A;
+
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+
+    --border-glass-base: rgba(255, 255, 255, 0.12);
+    --border-glass-raised: rgba(255, 255, 255, 0.16);
+    --border-glass-overlay: rgba(255, 255, 255, 0.20);
+    --highlight-edge: rgba(255, 255, 255, 0.18);
+
+    --accent-indigo: #6366F1;
+    --accent-violet: #8B5CF6;
+    --accent-cyan: #06B6D4;
+    --accent-coral: #F43F5E;
+    --focus-ring: #818CF8;
+
+    --aurora-hue: 0deg;
+    --parallax-x: 0px;
+    --parallax-y: 0px;
+  }
+
+  [data-theme="light"] {
+    --bg-base: #F8F9FD;
+    --bg-surface: #FFFFFF;
+    --bg-raised: #F1F4FA;
+    --bg-overlay: #E8ECF5;
+
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+
+    --border-glass-base: rgba(15, 23, 42, 0.08);
+    --border-glass-raised: rgba(15, 23, 42, 0.12);
+    --border-glass-overlay: rgba(15, 23, 42, 0.16);
+    --highlight-edge: rgba(255, 255, 255, 0.85);
+
+    --focus-ring: #6366F1;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Glassmorphism Design Tokens */
+.glass-base {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--border-glass-base);
+  box-shadow: inset 0 1px 0 0 var(--highlight-edge), 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .glass-base {
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 8px 32px 0 rgba(15, 23, 42, 0.06);
+}
+
+.glass-raised {
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--border-glass-raised);
+  box-shadow: inset 0 1px 0 0 var(--highlight-edge), 0 12px 40px 0 rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] .glass-raised {
+  background: rgba(255, 255, 255, 0.70);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.95), 0 12px 40px 0 rgba(15, 23, 42, 0.08);
+}
+
+.glass-overlay {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--border-glass-overlay);
+  box-shadow: inset 0 1px 0 0 var(--highlight-edge), 0 20px 60px 0 rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] .glass-overlay {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), 0 20px 60px 0 rgba(15, 23, 42, 0.12);
+}
+
+/* Solid Fallbacks when backdrop-filter is unsupported */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-base {
+    background-color: var(--bg-surface) !important;
+  }
+  .glass-raised {
+    background-color: var(--bg-raised) !important;
+  }
+  .glass-overlay {
+    background-color: var(--bg-overlay) !important;
+  }
+}
+
+/* Subtle Film Grain Noise Texture */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Accessibility Focus Ring */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aurora-blob {
+    animation: none !important;
+    transform: none !important;
+  }
+}
