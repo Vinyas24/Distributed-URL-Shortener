@@ -30,6 +30,7 @@ services:
       start_period: 5s
 
   api-1: &api-base
+    image: url-shortener:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -57,7 +58,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512m
+          memory: 768m
     restart: on-failure
 
   api-2:
@@ -101,6 +102,7 @@ services:
       start_period: 10s
 
   web:
+    image: url-shortener-web:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile

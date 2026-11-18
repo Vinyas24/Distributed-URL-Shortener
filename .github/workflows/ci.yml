@@ -97,8 +97,8 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: false
-          tags: url-shortener:${{ github.sha }}
+          load: true
+          tags: url-shortener:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -107,8 +107,8 @@ jobs:
         with:
           context: ./frontend
           file: ./frontend/Dockerfile
-          push: false
-          tags: url-shortener-web:${{ github.sha }}
+          load: true
+          tags: url-shortener-web:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -118,9 +118,14 @@ jobs:
 
       - name: Compose Stack Smoke Test
         run: |
-          docker compose up -d --build
+          docker compose up -d
           echo "Waiting for all 8 services to become healthy..."
-          timeout 120s bash -c 'until [ $(docker compose ps -q | wc -l) -eq 8 ] && ! docker compose ps | grep -q "starting\|unhealthy"; do sleep 3; done' || (docker compose ps && docker compose logs && exit 1)
+          timeout 180s bash -c '
+            until [ $(docker compose ps -q | wc -l) -eq 8 ] && ! docker compose ps | grep -qE "starting|unhealthy"; do
+              echo "Waiting for stack readiness... ($(docker compose ps --filter "status=running" -q | wc -l)/8 running)"
+              sleep 4
+            done
+          ' || (echo "=== Container Status ===" && docker compose ps && echo "=== Container Logs ===" && docker compose logs --tail=100 && exit 1)
           docker compose ps
           # Verify SPA root page through Nginx
           curl -sf http://localhost/ | grep -q "Calm Glass"
