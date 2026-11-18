@@ -90,6 +90,8 @@ services:
         condition: service_healthy
       api-2:
         condition: service_healthy
+      web:
+        condition: service_started
     restart: on-failure
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/actuator/health | grep -q UP || exit 1"]
@@ -97,6 +99,22 @@ services:
       timeout: 3s
       retries: 5
       start_period: 10s
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${WEB_PORT:-8081}:80"
+    depends_on:
+      - api-1
+      - api-2
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   prometheus:
     image: prom/prometheus:v2.51.0

@@ -7,21 +7,10 @@
     <meta name="description" content="Distributed URL Shortener — Fast, calm, production-grade short links with deep analytics" />
     <title>URL Shortener — Calm Glass</title>
     
-    <!-- Prevent Theme Flash -->
+    <!-- Dark Calm Glass Theme -->
     <script>
-      (function() {
-        try {
-          const stored = localStorage.getItem('urlshortener_theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = stored ? stored : (prefersDark ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme', theme);
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-        } catch (e) {}
-      })();
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
     </script>
 
     <!-- Google Fonts: Inter & JetBrains Mono -->

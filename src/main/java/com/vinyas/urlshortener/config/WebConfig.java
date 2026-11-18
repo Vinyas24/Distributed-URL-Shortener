@@ -33,6 +33,11 @@ public class WebConfig implements WebMvcConfigurer {
                         "X-RateLimit-Limit",
                         "X-RateLimit-Remaining")
                 .maxAge(3600);
+        registry.addMapping("/actuator/**")
+                .allowedOrigins(allowedOrigins.toArray(String[]::new))
+                .allowedMethods("GET", "OPTIONS")
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
 
     @Override

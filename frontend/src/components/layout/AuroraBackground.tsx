@@ -13,8 +13,8 @@ export const AuroraBackground: React.FC = () => {
       hue = '25deg';
     } else if (location.pathname.startsWith('/links') || location.pathname.startsWith('/stats')) {
       hue = '-25deg';
-    } else if (location.pathname.startsWith('/design')) {
-      hue = '15deg';
+    } else if (location.pathname.startsWith('/expired')) {
+      hue = '-55deg';
     } else if (location.pathname.startsWith('/login') || location.pathname.startsWith('/auth')) {
       hue = '45deg';
     }

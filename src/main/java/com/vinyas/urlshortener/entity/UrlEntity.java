@@ -39,11 +39,24 @@ public class UrlEntity {
     }
 
     public UrlEntity(long id, String shortCode, String originalUrl, boolean custom, Instant expiresAt) {
+        this(id, shortCode, originalUrl, custom, expiresAt, null);
+    }
+
+    public UrlEntity(long id, String shortCode, String originalUrl, boolean custom, Instant expiresAt, String ownerId) {
         this.id = id;
         this.shortCode = shortCode;
         this.originalUrl = originalUrl;
         this.custom = custom;
         this.expiresAt = expiresAt;
+        this.ownerId = ownerId;
+    }
+
+    public void setExpiresAt(Instant expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Long getId() {
